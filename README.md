@@ -1,57 +1,51 @@
-- import telebot
-import webbrowser
-from telebot import types
-
-
-
-bot =telebot.TeleBot("5893331690:AAGYktQkozUX4YxVu7CSHP5w8aCKXLk1cmY")
-
-@bot.message_handler(commands=["site"])
-def site(message):
-    webbrowser.open("https://www.youtube.com/watch?v=ObwoMskHDoA&list=PL0lO_mIqDDFUev1gp9yEwmwcy8SicqKbt&index=1")
-
-
-
-
-
-
-
-@bot.message_handler(commands=['start'])
-def main(message):
-    bot.send_message(message.chat.id, "ПРИВЕТ спасибо за  то что вы выбрали мой бот")
-
-@bot.message_handler(commands=['Help'])
-def main(message):
-    bot.send_message(message.chat.id, "Help information, информации пока нет" )
-
-
-@bot.message_handler()
-def info(message):
-    if message.text.lower() == "привет":
-        bot.send_message(message.chat.id, "ПРИВЕТ спасибо за  то что вы выбрали мой бот")
-
-    elif message.text.lower() == "id":
-         bot.reply_to(message,"информация запрещена")
-
-@bot.message_handler(content_types=["photo", "audio"])
-def get_photo(message):
-    markup = types.InlineKeyboardMarkup()
-    markup.add(types.InlineKeyboardButton("Перейти на сайт", url="https://www.youtube.com/watch?v=ObwoMskHDoA&list=PL0lO_mIqDDFUev1gp9yEwmwcy8SicqKbt&index=1"))
-
-    markup = types.InlineKeyboardMarkup()
-    markup.add(types.InlineKeyboardButton("удалить фото",callback_data="delete"))
-    markup.add(types.InlineKeyboardButton("редактировать фото", callback_data="edit"))
-    bot.reply_to(message, "прикольное фото", reply_markup=markup)
-
-@bot.callback_query_handler(func=lambda callback: True)
-def callback_message(callback):
-    if callback.data == "delete":
-        bot.delete_message(callback.message.chat.id, callback.message.message_id - 1)
-    elif callback.data == "edit":
-         bot.edit_message_text("Edit text", callback.message.chat.id, callback.message.message_id - 1)
-
-
-
-
-bot.polling(none_stop=True )
-
+# -*- coding: utf-8 -*-
+ 
+# в предыдущем комментарии мы сообщили среде
+# разработки в какой именно кодировке
+# сохранён файл - и просим открыть
+# его в соответсвии с правилаами этой кодировки
+import sys
+from PyQt4.QtGui import *
+from PyQt4 import QtGui
+ 
+# вызов QApplication - создаёт основу для любого
+#графического приложения на PyQT4
+app = QApplication(sys.argv)
+ 
+# создаём виджет
+ 
+widget = QtGui.QWidget()
+ 
+#изменяем размеры родительского виджета
+widget.resize(400, 400)
+widget.setWindowTitle('simple')
+ 
+# вторым параметров в конструктор кнопки передаём ссылку на виджет
+# таким образом мы показываем что хотим видеть кнопку именно на форме (виджете)
+#а не где-то ещё
+button2 = QPushButton("HEllo WOrld =) !!!)))", widget)
+ 
+#зададим подсказку - появится при наведении курсора мыши на кнопку
+button2.setToolTip('Это кнопка создана <b>PyQT4</b> - на питоне  ')
+ 
+# изменим размер кнопки
+#  метод .sizeHint() - возвращает оптимальный размер
+button2.resize(button2.sizeHint())
+ 
+#но если мы желаем задать размер сами ,то так:
+button2.resize(150,80)
+ 
+# переместим кнопку относительно левого верхнего угла
+#родительского виджета
+button2.move(200, 300)
+ 
+#ну и давайте  -добавим что-то для передачи информации -
+#поле текстового ввода:
+ 
+edit = QtGui.QLineEdit('буквы сюда))',  widget)
+edit.setDragEnabled(True)
+edit.move(100, 100)
+ 
+widget.show()
+ 
+app.exec_()
